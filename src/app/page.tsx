@@ -5,17 +5,13 @@ import OGCard from './OgCard'
 
 export default function OGImageGenerator() {
   const [url, setUrl] = useState('')
-  const [ogImageUrl, setOgImageUrl] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [ogdata , setOgdata] = useState(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleAction = async () => {
     setIsLoading(true)
-    setError('')
-    setOgImageUrl('')
-
+    
     try {
       const response = await fetch("https://cold-flower-2dad.gamingbureau10.workers.dev/?url=" + url,{
         method: 'GET',
@@ -25,7 +21,6 @@ export default function OGImageGenerator() {
       })
       if (!response.ok) throw new Error('Failed to generate OG image')
       const data = await response.json();
-      setOgImageUrl(data.image);
       setOgdata(data);
     } catch (err) {
       setError('Failed to generate OG image. Please try again.')
@@ -41,7 +36,7 @@ export default function OGImageGenerator() {
         <p className="text-center text-gray-400 mb-6">
           Enter a URL to generate its Open Graph image
         </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form action={async()=>{await handleAction()}} className="space-y-4">
           <div className="flex space-x-2">
             <input
               type="url"
