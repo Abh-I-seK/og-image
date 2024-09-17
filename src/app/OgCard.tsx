@@ -1,35 +1,30 @@
-import Image from 'next/image'
+import Link from "next/link"
 
 export interface OGData {
-  'og:image': string
-  'og:title': string
-  'og:site_name': string
-  'og:description': string
-  'og:url': string
+  'image': string
+  'title': string
+  'site_name': string
+  'description': string
+  'url': string
 }
 
 export default function OGCard({ ogData }: { ogData: OGData }) {
   return (
-    <div className="max-w-2xl mx-auto bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-      <div className="relative h-48 w-full">
+    <Link href={ogData.url}>
+    <div className="max-w-2xl mx-auto bg-gray-900 rounded-lg overflow-hidden shadow-lg grid grid-cols-2 max-h-[160px] mt-3 border-1 border-black">
+      <div className="relative h-48 w-full mx-auto">
         <img
-          src={ogData['og:image']}
-          alt={ogData['og:title']}
+          src={ogData['image']}
+          alt={ogData['title']}
+          className='object-fill'
         />
       </div>
-      <div className="p-6">
-        <div className="text-sm text-blue-400 mb-2">{ogData['og:site_name']}</div>
-        <h2 className="text-xl font-bold text-white mb-2 line-clamp-2">{ogData['og:title']}</h2>
-        <p className="text-gray-400 mb-4 line-clamp-3">{ogData['og:description']}</p>
-        <a
-          href={ogData['og:url']}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          {ogData['og:url']}
-        </a>
+      <div className="p-3">
+        <div className="text-sm text-blue-400 mb-2">{ogData['site_name']}</div>
+        <h2 className="text-md font-bold text-white mb-2 line-clamp-2">{ogData['title']}</h2>
+        <p className="text-gray-400 mb-4 line-clamp-2">{ogData['description']}</p>
       </div>
     </div>
+    </Link>
   )
 }

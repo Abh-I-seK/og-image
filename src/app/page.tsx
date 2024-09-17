@@ -17,13 +17,16 @@ export default function OGImageGenerator() {
     setOgImageUrl('')
 
     try {
-      const response = await fetch("https://cold-flower-2dad.gamingbureau10.workers.dev/?url=" + url)
+      const response = await fetch("https://cold-flower-2dad.gamingbureau10.workers.dev/?url=" + url,{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       if (!response.ok) throw new Error('Failed to generate OG image')
-      const data = await response.json()
-      console.log(data);
-      const ogData = JSON.parse(data);
-      setOgImageUrl(ogData["og:image"]);
-      setOgdata(ogData);
+      const data = await response.json();
+      setOgImageUrl(data.image);
+      setOgdata(data);
     } catch (err) {
       setError('Failed to generate OG image. Please try again.')
     } finally {
