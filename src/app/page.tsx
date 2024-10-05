@@ -19,8 +19,10 @@ export default function OGImageGenerator() {
           'Content-Type': 'application/json',
         },
       })
-      if (!response.ok) throw new Error('Failed to generate OG image')
       const data = await response.json();
+      if(data.length <= 4){
+        throw new Error('Failed to generate OG image')
+      }
       setOgdata(data);
     } catch (err) {
       setError('Failed to generate OG image. Please try again.')
